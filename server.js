@@ -77,17 +77,17 @@ app.get("/pets/:id", (req, res) => {
 
 // Update a pet by id
 app.put("/pets/:id", (req, res) => {
-  const { name, type, image, adopted } = req.body;
+  const { adopted } = req.body;
   const sql =
     "UPDATE pets SET name = ?, type = ?, image = ?, adopted = ? WHERE id = ?";
-  const params = [name, type, image, adopted, req.params.id];
+  const params = [adopted, req.params.id];
 
   db.run(sql, params, function (err) {
     if (err) {
       res.status(400).json({ error: err.message });
       return;
     }
-    res.json({ id: req.params.id, name, type, image, adopted });
+    res.json({ id: req.params.id, adopted });
   });
 });
 
