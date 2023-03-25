@@ -36,7 +36,7 @@ samplePets.forEach((pet) => {
 
 // Create a pet
 app.post("/pets", (req, res) => {
-  const { name, type, image, adopted } = req.body;
+  const { name, type = "cat", image, adopted = 0 } = req.body;
   const sql =
     "INSERT INTO pets (name, type, image, adopted) VALUES (?, ?, ?, ?)";
   const params = [name, type, image, adopted];
@@ -78,8 +78,7 @@ app.get("/pets/:id", (req, res) => {
 // Update a pet by id
 app.put("/pets/:id", (req, res) => {
   const { adopted } = req.body;
-  const sql =
-    "UPDATE pets SET name = ?, type = ?, image = ?, adopted = ? WHERE id = ?";
+  const sql = "UPDATE pets SET adopted = ? WHERE id = ?";
   const params = [adopted, req.params.id];
 
   db.run(sql, params, function (err) {
